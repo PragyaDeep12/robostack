@@ -28,7 +28,7 @@ export default function EmployeeComponent() {
           <p className="card-text">
             Take a look at the Permissions Provided to You By the Admin
           </p>
-          <Link to="/employee/viewResponsibility" className="btn btn-primary">
+          <Link to="/employee/viewPermission" className="btn btn-primary">
             Go To Permissions
           </Link>
         </div>

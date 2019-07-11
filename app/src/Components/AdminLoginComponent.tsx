@@ -14,11 +14,11 @@ export default function AdminLoginComponent(props) {
       <div>
         <TextField
           id="outlined-email-input"
-          label="Email"
+          label="Username"
           // className={classes.textField}
-          type="email"
+          type="text"
           fullWidth
-          name="email"
+          name="Username"
           autoComplete="email"
           margin="normal"
           variant="outlined"
