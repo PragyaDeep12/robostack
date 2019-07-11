@@ -5,6 +5,7 @@ import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Tooltip, Button, TextField } from "@material-ui/core";
+import axios from "axios";
 import Responsibility from "../Models/Responsibility";
 // import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,44 +24,35 @@ export default function ViewResponsibility(props) {
     any
   ] = useState([]);
   const callBackend = async () => {
-    var res = await fetch("/getResponsibilityById", {
-      method: "POST",
-      body: JSON.stringify({ id: props.employee.id }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    var data = await res.json();
+    var res = await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/getResponsibilityById",
+      { id: props.employee.id }
+    );
+    var data = await res.data;
     setResponsibility(data);
   };
   useEffect(() => {
     callBackend();
   }, []);
   const deleteResponsibility = async id => {
-    var res = await fetch("/deleteResponsibilityById", {
-      method: "POST",
-      body: JSON.stringify({ employeeId: props.employee.id, id: id }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    var data = await res.json();
+    var res = await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/deleteResponsibilityById",
+      { employeeId: props.employee.id, id: id }
+    );
+    var data = await res.data;
     console.log(data);
     callBackend();
   };
   const addResponsibility = async e => {
     e.preventDefault();
-    var res = await fetch("/addResponsibilityById", {
-      method: "POST",
-      body: JSON.stringify({
+    var res = await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/addResponsibilityById",
+      {
         employeeId: props.employee.id,
         responsibility: newRes
-      }),
-      headers: {
-        "Content-Type": "application/json"
       }
-    });
-    var data = await res.json();
+    );
+    var data = await res.data;
     if (res.status === 200) {
       console.log("responsibility added");
       setNewRes("");

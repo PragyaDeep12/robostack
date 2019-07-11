@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 interface EmployeeCount {
   department?: string | null;
   count?: number | null;
@@ -11,8 +12,10 @@ export default function AdminComponent() {
     any
   ] = React.useState([]);
   const callBackend = async () => {
-    var res = await fetch("/employeeCount");
-    var data = await res.json();
+    var res = await axios.get(
+      "https://evening-fortress-64572.herokuapp.com/employeeCount"
+    );
+    var data = await res.data;
     if (data.length > 0) {
       setEmployeeCount(data);
     }

@@ -3,6 +3,7 @@ import SelectComponent from "./SelectComponent";
 import { TextField } from "@material-ui/core";
 import { closeDialog } from "./CustomDialog";
 import { openSnackbar } from "./CustomSnackbar";
+import axios from "axios";
 
 export default function UpdateEmployee(props) {
   const [department, setDepartment] = useState(props.employee.department);
@@ -24,28 +25,28 @@ export default function UpdateEmployee(props) {
     e.preventDefault();
     console.log("here");
     if (employee && department) {
-      await fetch("/updateEmployee", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: id, name: employee, department: department })
-      }).then(res => {
-        if (res.status == 200) {
-          openSnackbar({
-            message: "Employee Updated Successfully",
-            timeout: 3000
-          });
-          console.log("employee added ");
-          closeDialog();
-        } else {
-          openSnackbar({
-            message: "Employee could not be Updated ",
-            timeout: 3000
-          });
-          console.log(res);
-        }
-      });
+      await axios
+        .post("https://evening-fortress-64572.herokuapp.com/updateEmployee", {
+          id: id,
+          name: employee,
+          department: department
+        })
+        .then(res => {
+          if (res.status == 200) {
+            openSnackbar({
+              message: "Employee Updated Successfully",
+              timeout: 3000
+            });
+            console.log("employee added ");
+            closeDialog();
+          } else {
+            openSnackbar({
+              message: "Employee could not be Updated ",
+              timeout: 3000
+            });
+            console.log(res);
+          }
+        });
     } else {
       console.log("one or more values are missing");
     }

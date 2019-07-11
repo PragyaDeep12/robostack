@@ -8,6 +8,7 @@ import { Tooltip, Button, TextField } from "@material-ui/core";
 import Responsibility from "../Models/Responsibility";
 import LoginContext from "../Contexts/LoginContext";
 import Employee from "../Models/Employee";
+import axios from "axios";
 // import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,14 +34,11 @@ export default function EmployeeResponsibility(props) {
       var userDetails: Employee = JSON.parse(user);
       console.log(user);
       if (userDetails && userDetails.id) {
-        var res = await fetch("/getResponsibilityById", {
-          method: "POST",
-          body: JSON.stringify({ id: userDetails.id }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-        var data = await res.json();
+        var res = await axios.post(
+          "https://evening-fortress-64572.herokuapp.com/getResponsibilityById",
+          { id: userDetails.id }
+        );
+        var data = await res.data;
         setResponsibility(data);
       }
     }
