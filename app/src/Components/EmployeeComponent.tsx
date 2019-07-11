@@ -6,7 +6,7 @@ export default function EmployeeComponent() {
     <div>
       <div className="jumbotron">
         <div className="">
-          <div className="display-4"> Employee Dadhboard</div>
+          <div className="display-4"> Employee Dashboard</div>
         </div>
       </div>
       <div className="card">

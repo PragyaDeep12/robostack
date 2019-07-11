@@ -25,7 +25,7 @@ export default function AdminComponent() {
       <div>
         <div className="jumbotron">
           <div className="">
-            <div className="display-4"> Admin Dadhboard</div>
+            <div className="display-4"> Admin Dashboard</div>
           </div>
         </div>
         <div className="row card-group">
