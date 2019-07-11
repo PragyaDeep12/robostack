@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SelectComponent from "./SelectComponent";
 import { TextField } from "@material-ui/core";
 import { closeDialog } from "./CustomDialog";
+import { openSnackbar } from "./CustomSnackbar";
 
 export default function UpdateEmployee(props) {
   const [department, setDepartment] = useState(props.employee.department);
@@ -31,9 +32,17 @@ export default function UpdateEmployee(props) {
         body: JSON.stringify({ id: id, name: employee, department: department })
       }).then(res => {
         if (res.status == 200) {
+          openSnackbar({
+            message: "Employee Updated Successfully",
+            timeout: 3000
+          });
           console.log("employee added ");
           closeDialog();
         } else {
+          openSnackbar({
+            message: "Employee could not be Updated ",
+            timeout: 3000
+          });
           console.log(res);
         }
       });

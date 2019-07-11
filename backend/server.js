@@ -7,10 +7,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const connection = mysql.createConnection({
-  user: "root",
+  user: "pragya12",
   port: "3306",
-  password: "1234",
-  database: "employee"
+  host: "db4free.net",
+  password: "pragya12",
+  database: "pragya12"
 });
 connection.connect(err => {
   if (err) throw err;
@@ -119,7 +120,7 @@ app.get("/allPermssion", async (req, res) => {
 app.post("/getPermissionById", async (req, res) => {
   try {
     var data = req.body;
-    var sql = "select * from employeePermssion where employeeId=?";
+    var sql = "select * from employeepermssion where employeeId=?";
     await connection.query(sql, [data.id], (err, res1) => {
       if (err) {
         console.log(err);
@@ -135,7 +136,7 @@ app.post("/addPermissionById", async (req, res) => {
   try {
     var data = req.body;
     var sql =
-      "insert into employeePermssion (employeeId, permissionId) values (?,?)";
+      "insert into employeepermssion (employeeId, permissionId) values (?,?)";
     await connection.query(
       sql,
       [data.employeeId, data.permissionId],
@@ -155,7 +156,7 @@ app.post("/deletePermissionById", async (req, res) => {
   try {
     var data = req.body;
     var sql =
-      "delete from employeePermssion where employeeId=? and permissionId=?";
+      "delete from employeepermssion where employeeId=? and permissionId=?";
     await connection.query(
       sql,
       [data.employeeId, data.permissionId],
@@ -187,7 +188,7 @@ app.post("/loginEmployee", async (req, res) => {
 app.post("/getResponsibilityByEmpId", async (req, res) => {
   try {
     var sql =
-      " select * from permission where id in (select permissionId from employeePermssion where employeeId=?)";
+      " select * from permission where id in (select permissionId from employeepermssion where employeeId=?)";
     var data = req.body;
     await connection.query(sql, [data.id], (err, res1) => {
       if (err) {

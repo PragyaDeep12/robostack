@@ -59,20 +59,22 @@ export default function ViewPermission(props) {
         </div>
       </div>
       <div className={classes.root}>
-        {permission.map((item, index) => {
-          return (
-            <div>
-              <List
-                aria-label="Secondary mailbox folders"
-                style={{ width: "100%" }}
-              >
-                <ListItem button>
-                  <ListItemText primary={item.permission} />
-                </ListItem>
-              </List>
-            </div>
-          );
-        })}
+        {permission.length > 0
+          ? permission.map((item, index) => {
+              return (
+                <div>
+                  <List
+                    aria-label="Secondary mailbox folders"
+                    style={{ width: "100%" }}
+                  >
+                    <ListItem button>
+                      <ListItemText primary={item.permission} />
+                    </ListItem>
+                  </List>
+                </div>
+              );
+            })
+          : ""}
       </div>
     </div>
   );
