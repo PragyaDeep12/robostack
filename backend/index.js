@@ -13,7 +13,6 @@ const connection = mysql.createConnection({
   password: "pragya12",
   database: "pragya12"
 });
-//mysql connection
 connection.connect(err => {
   if (err) throw err;
   console.log("Connected!");
