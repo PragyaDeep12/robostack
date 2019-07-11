@@ -11,6 +11,7 @@ import { openModal } from "./CustomDialog";
 import UpdateEmployee from "./UpdateEmployee";
 import EditPermission from "./EditPermission";
 import ViewResponsibility from "./ViewResponsibility";
+import axios from "axios";
 // import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,21 +25,20 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function ViewEmployeeList() {
   const [employeeList, setEmployeeList]: [Array<Employee>, any] = useState([]);
   const getEmployeeList = async () => {
-    var rows = await fetch("/allEmployees");
+    var rows = await axios.get(
+      "https://evening-fortress-64572.herokuapp.com/allEmployees"
+    );
     console.log(rows);
-    var data = await rows.json();
+    var data = await rows.data;
     console.log("here");
     console.log(data);
     setEmployeeList(data);
   };
   const deleteEmployee = async id => {
-    await fetch("/deleteEmployee", {
-      method: "POST",
-      body: JSON.stringify({ id: id }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+    await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/deleteEmployee",
+      { id: id }
+    );
     getEmployeeList();
   };
   useEffect(() => {

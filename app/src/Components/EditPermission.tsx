@@ -13,6 +13,7 @@ import {
 import { closeDialog } from "./CustomDialog";
 import PermissionModel from "../Models/PermissionModel";
 import SwitchChecked from "./SwitchChecked";
+import axios from "axios";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -28,19 +29,18 @@ export default function EditPermission(props) {
   );
   const [allPermission, setAllPermission] = useState([]);
   const callBackend = async () => {
-    var res = await fetch("/allPermssion");
+    var res = await axios.get(
+      "https://evening-fortress-64572.herokuapp.com/allPermssion"
+    );
     console.log(res);
-    var data = await res.json();
+    var data = await res.data;
 
     setAllPermission(data);
-    var res2 = await fetch("/getPermissionById", {
-      method: "POST",
-      body: JSON.stringify({ id: props.employee.id }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    var data2 = await res2.json();
+    var res2 = await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/getPermissionById",
+      { id: props.employee.id }
+    );
+    var data2 = await res2.data;
     console.log(data2);
     setPermission(data2);
   };
@@ -53,33 +53,27 @@ export default function EditPermission(props) {
     console.log(item.id);
     console.log(e);
     if (e === true) {
-      var res = await fetch("/addPermissionById", {
-        method: "POST",
-        body: JSON.stringify({
+      var res = await axios.post(
+        "https://evening-fortress-64572.herokuapp.com/addPermissionById",
+        {
           employeeId: props.employee.id,
           permissionId: item.id
-        }),
-        headers: {
-          "Content-Type": "application/json"
         }
-      });
+      );
       if (res.status === 200) {
-        console.log(await res.json());
+        console.log(await res.data);
       }
     }
     if (e === false) {
-      var res = await fetch("/deletePermissionById", {
-        method: "POST",
-        body: JSON.stringify({
+      var res = await axios.post(
+        "https://evening-fortress-64572.herokuapp.com/deletePermissionById",
+        {
           employeeId: props.employee.id,
           permissionId: item.id
-        }),
-        headers: {
-          "Content-Type": "application/json"
         }
-      });
+      );
       if (res.status === 200) {
-        console.log(await res.json());
+        console.log(await res.data);
       }
     }
   };

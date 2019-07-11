@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SelectComponent from "./SelectComponent";
 import { TextField } from "@material-ui/core";
 import { openSnackbar } from "./CustomSnackbar";
-
+import axios from "axios";
 export default function AddEmployee(props) {
   const [department, setDepartment] = useState();
   const [employee, setEmployee] = useState();
@@ -21,34 +21,30 @@ export default function AddEmployee(props) {
   const submitForm = async e => {
     e.preventDefault();
     if (employee && department) {
-      await fetch("/addEmployee", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
+      await axios
+        .post("https://evening-fortress-64572.herokuapp.com/addEmployee", {
           name: employee,
           department: department,
           email: email
         })
-      }).then(res => {
-        if (res.status == 200) {
-          openSnackbar({
-            message: "employee added successfully",
-            timeout: 3000
-          });
-          setEmployee(null);
-          setEmail(null);
-          console.log("employee added ");
-        } else {
-          openSnackbar({
-            message: "employee could not be added",
-            timeout: 3000
-          });
+        .then(res => {
+          if (res.status == 200) {
+            openSnackbar({
+              message: "employee added successfully",
+              timeout: 3000
+            });
+            setEmployee(null);
+            setEmail(null);
+            console.log("employee added ");
+          } else {
+            openSnackbar({
+              message: "employee could not be added",
+              timeout: 3000
+            });
 
-          console.log(res);
-        }
-      });
+            console.log(res);
+          }
+        });
     } else {
       console.log("one or more values are missing");
     }

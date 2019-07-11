@@ -1,18 +1,18 @@
 import * as React from "react";
 import { Component } from "react";
 import { TextField } from "@material-ui/core";
+import axios from "axios";
+import { openSnackbar } from "./CustomSnackbar";
 export default function AddPermission() {
   const [permission, setPermission] = React.useState();
   const submitForm = async e => {
     e.preventDefault();
-    var res = await fetch("/addPermission", {
-      method: "POST",
-      body: JSON.stringify({ permission: permission }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+    var res = await axios.post(
+      "https://evening-fortress-64572.herokuapp.com/addPermission",
+      { permission: permission }
+    );
     if (res.status === 200) {
+      openSnackbar({ message: "permission added sucessfully", timeout: 3000 });
       console.log("permisson added");
     }
   };

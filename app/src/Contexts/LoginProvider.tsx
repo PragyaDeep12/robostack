@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginInfo from "../Models/LoginInfo";
 import LoginContext from "./LoginContext";
+import axios from "axios";
 import { openSnackbar } from "../Components/CustomSnackbar";
 export default function LoginProvider(props) {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -25,33 +26,31 @@ export default function LoginProvider(props) {
   };
   const loginAsEmployee = async email => {
     console.log(email);
-    await fetch("/loginEmployee", {
-      method: "post",
-      body: JSON.stringify({ email: email }),
-      headers: {
-        "Content-type": "application/json"
-      }
-    }).then(async res => {
-      var data = await res.json();
-      console.log(data);
-      console.log(data.loginSuccessful);
-      if (data[0] && data[0].email) {
-        localStorage.setItem("user", JSON.stringify(data[0]));
-        localStorage.setItem("loggedInAs", "employee");
-        await setLoginDetails({
-          user: data[0],
-          isLoggedin: true,
-          loggedInAs: "employee"
-        });
-      } else {
-        openSnackbar({ message: "Unregistered Employee", timeout: 3000 });
-        await setLoginDetails({
-          user: null,
-          isLoggedin: false,
-          loggedInAs: null
-        });
-      }
-    });
+    await axios
+      .post("https://evening-fortress-64572.herokuapp.com/loginEmployee", {
+        email: email
+      })
+      .then(async res => {
+        var data = await res.data;
+        console.log(data);
+        console.log(data.loginSuccessful);
+        if (data[0] && data[0].email) {
+          localStorage.setItem("user", JSON.stringify(data[0]));
+          localStorage.setItem("loggedInAs", "employee");
+          await setLoginDetails({
+            user: data[0],
+            isLoggedin: true,
+            loggedInAs: "employee"
+          });
+        } else {
+          openSnackbar({ message: "Unregistered Employee", timeout: 3000 });
+          await setLoginDetails({
+            user: null,
+            isLoggedin: false,
+            loggedInAs: null
+          });
+        }
+      });
   };
   const justPrint = async balue => {
     console.log(balue);
