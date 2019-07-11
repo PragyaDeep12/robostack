@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SelectComponent from "./SelectComponent";
 import { TextField } from "@material-ui/core";
+import { openSnackbar } from "./CustomSnackbar";
 
 export default function AddEmployee(props) {
   const [department, setDepartment] = useState();
@@ -32,8 +33,19 @@ export default function AddEmployee(props) {
         })
       }).then(res => {
         if (res.status == 200) {
+          openSnackbar({
+            message: "employee added successfully",
+            timeout: 3000
+          });
+          setEmployee(null);
+          setEmail(null);
           console.log("employee added ");
         } else {
+          openSnackbar({
+            message: "employee could not be added",
+            timeout: 3000
+          });
+
           console.log(res);
         }
       });
@@ -43,7 +55,8 @@ export default function AddEmployee(props) {
   };
   return (
     <form onSubmit={submitForm}>
-      <div className="basic-form">
+      <div className="App basic-form">
+        <h3>Add Employee</h3>
         <div>
           <SelectComponent
             for={"Department"}
@@ -65,6 +78,7 @@ export default function AddEmployee(props) {
             name="roll"
             margin="normal"
             variant="outlined"
+            value={employee}
             onChange={e => {
               setEmployee(e.target.value);
             }}
@@ -80,6 +94,7 @@ export default function AddEmployee(props) {
             name="roll"
             margin="normal"
             variant="outlined"
+            value={email}
             onChange={e => {
               setEmail(e.target.value);
             }}

@@ -250,5 +250,21 @@ app.post("/addResponsibilityById", async (req, res) => {
     }
   );
 });
+app.get("/employeeCount", async (req, res) => {
+  try {
+    var sql =
+      "select department, count(*)as count from employee group by department";
+    await connection.query(sql, (err, res1) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      }
+      res.send(res1);
+    });
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
+});
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));

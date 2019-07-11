@@ -48,41 +48,15 @@ export default function EmployeeResponsibility(props) {
   useEffect(() => {
     callBackend();
   }, []);
-  //   const deleteResponsibility = async id => {
-  //     var res = await fetch("/deleteResponsibilityById", {
-  //       method: "POST",
-  //       body: JSON.stringify({ employeeId: props.employee.id, id: id }),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     });
-  //     var data = await res.json();
-  //     console.log(data);
-  //     callBackend();
-  //   };
-  //   const addResponsibility = async e => {
-  //     e.preventDefault();
-  //     var res = await fetch("/addResponsibilityById", {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         employeeId: props.employee.id,
-  //         responsibility: newRes
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     });
-  //     var data = await res.json();
-  //     if (res.status === 200) {
-  //       console.log("responsibility added");
-  //       setNewRes("");
-  //       callBackend();
-  //     }
-  //   };
+
   const classes = useStyles();
   return (
     <div className="">
-    
+      <div className="jumbotron">
+        <div className="">
+          <div className="card-title h2">My Responsibilities</div>
+        </div>
+      </div>
       <div className={classes.root}>
         {responsibility.map((item, index) => {
           return (

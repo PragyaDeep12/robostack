@@ -19,7 +19,8 @@ export default function AddPermission() {
   return (
     <div>
       <form onSubmit={submitForm}>
-        <div className="basic-form">
+        <div className="App basic-form">
+          <h3>Add New Permission</h3>
           <div>
             <TextField
               id="outlined-email-input"

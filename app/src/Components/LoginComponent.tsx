@@ -9,7 +9,8 @@ export default function LoginComponent(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <div className="basic-form">
+    <div className="App basic-form">
+      <h3>Login As Employee</h3>
       <div>
         <TextField
           id="outlined-email-input"

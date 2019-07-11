@@ -9,7 +9,8 @@ export default function AdminLoginComponent(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <div className="basic-form">
+    <div className="App basic-form">
+      <h3>Login As Admin</h3>
       <div>
         <TextField
           id="outlined-email-input"

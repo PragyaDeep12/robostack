@@ -1,7 +1,6 @@
 import * as React from "react";
 import AdminNavbar from "../Components/AdminNavbar";
-import ViewEmployeeList from "../Components/ViewEmployeeList";
-import AddEmployee from "../Components/AddEmployee";
+import AdminComponent from "../Components/AdminComponent";
 export default function AdminPage() {
   return (
     <div>
@@ -16,7 +15,7 @@ export default function AdminPage() {
       ) : (
         <ViewEmployeeList />
       )} */}
-      this is admin page
+      {window.location.href.endsWith("/admin") ? <AdminComponent /> : ""}
     </div>
   );
 }

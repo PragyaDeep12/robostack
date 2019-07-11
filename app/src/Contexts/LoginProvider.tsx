@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LoginInfo from "../Models/LoginInfo";
 import LoginContext from "./LoginContext";
+import { openSnackbar } from "../Components/CustomSnackbar";
 export default function LoginProvider(props) {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     user: null,
@@ -19,6 +20,7 @@ export default function LoginProvider(props) {
       });
     } else {
       setLoginDetails({ user: null, isLoggedin: false, loggedInAs: null });
+      openSnackbar({ message: "Invalid Id or Password", timeout: 3000 });
     }
   };
   const loginAsEmployee = async email => {
@@ -32,21 +34,22 @@ export default function LoginProvider(props) {
     }).then(async res => {
       var data = await res.json();
       console.log(data);
-      localStorage.setItem("user", JSON.stringify(data[0]));
-      localStorage.setItem("loggedInAs", "employee");
-      if (data.loginSuccessful) {
-        setLoginDetails({
-          user: {
-            id: data.id,
-            email: email,
-            name: data.name,
-            department: data.department
-          },
+      console.log(data.loginSuccessful);
+      if (data[0] && data[0].email) {
+        localStorage.setItem("user", JSON.stringify(data[0]));
+        localStorage.setItem("loggedInAs", "employee");
+        await setLoginDetails({
+          user: data[0],
           isLoggedin: true,
-          loggedInAs: "employeee"
+          loggedInAs: "employee"
         });
       } else {
-        setLoginDetails({ user: null, isLoggedin: false, loggedInAs: null });
+        openSnackbar({ message: "Unregistered Employee", timeout: 3000 });
+        await setLoginDetails({
+          user: null,
+          isLoggedin: false,
+          loggedInAs: null
+        });
       }
     });
   };
@@ -55,6 +58,7 @@ export default function LoginProvider(props) {
   };
   const setLoginDetails = async (loginInfo: LoginInfo) => {
     console.log("reaching here");
+    console.log(loginInfo);
     setLoginInfo(loginInfo);
   };
   return (
